@@ -1,15 +1,15 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native'
 import { Card } from 'react-native-paper'
 import { getImageFromApi } from '../API/TMDBApi'
 
 class FilmItem extends React.Component {
   render() {
-    const { film } = this.props
+    const { film, displayDetailForFilm } = this.props
 
     return (
       <Card style={styles.card}>
-        <View style={styles.main_container}>
+        <TouchableOpacity style={styles.main_container} onPress={() => displayDetailForFilm(film.id)}>
           <Image
             style={styles.image}
             source={{ uri: getImageFromApi(film.poster_path) }}
@@ -31,7 +31,7 @@ class FilmItem extends React.Component {
             </View>
 
           </View>
-        </View>
+        </TouchableOpacity>
       </Card>
     )
   }
