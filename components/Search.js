@@ -2,8 +2,9 @@ import React from 'react'
 import { StyleSheet, View, TextInput, Button, FlatList, ActivityIndicator } from 'react-native'
 import FilmItem from './FilmItem'
 import { getFilmsFromApiWithSearchedText } from '../API/TMDBApi'
+import { connect } from 'react-redux'
 
-export default class Search extends React.Component {
+class Search extends React.Component {
 
   constructor(props) {
     super(props)
@@ -60,6 +61,10 @@ export default class Search extends React.Component {
     this.props.navigation.navigate("FilmDetail", { idFilm: idFilm })
   }
 
+  _isFavoriteFilm(film) {
+    return (this.props.favoritesFilm.findIndex(item => item.id === film.id) !== -1)
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -82,6 +87,7 @@ export default class Search extends React.Component {
         <View style={{ flex: 1, marginLeft: 5, marginRight: 5 }}>
           <FlatList
             data={this.state.films}
+            extraData={this.props.favoritesFilm}
             onEndReachedThreshold={0.5}
             onEndReached={() => {
               if (this.page < this.totalPages) {
@@ -90,7 +96,7 @@ export default class Search extends React.Component {
             }}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) =>
-              <FilmItem film={item} displayDetailForFilm={this._displayDetailForFilm} />
+              <FilmItem film={item} isFavorite={this._isFavoriteFilm(item)} displayDetailForFilm={this._displayDetailForFilm} />
             }
           />
         </View>
@@ -128,3 +134,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });
+
+const mapStateToProps = (state) => {
+  return {
+    favoritesFilm: state.favoritesFilm
+  }
+}
+
+export default connect(mapStateToProps)(Search)

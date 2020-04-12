@@ -3,9 +3,10 @@ import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native'
 import { Card } from 'react-native-paper'
 import { getImageFromApi } from '../API/TMDBApi'
 
-class FilmItem extends React.Component {
+class FilmItem extends React.PureComponent {
+
   render() {
-    const { film, displayDetailForFilm } = this.props
+    const { film, isFavorite, displayDetailForFilm } = this.props
 
     return (
       <Card style={styles.card}>
@@ -18,6 +19,12 @@ class FilmItem extends React.Component {
           <View style={styles.content_container}>
 
             <View style={styles.header_container}>
+              {isFavorite &&
+                <Image
+                  style={styles.favorite_image}
+                  source={require('../Images/ic_favorite.png')}
+                />
+              }
               <Text style={styles.title_text}>{film.title}</Text>
               <Text style={styles.vote_text}>{film.vote_average}</Text>
             </View>
@@ -84,6 +91,11 @@ const styles = StyleSheet.create({
   date_text: {
     textAlign: 'right',
     fontSize: 14
+  },
+  favorite_image: {
+    width: 20,
+    height: 20,
+    margin: 5
   }
 })
 
