@@ -6,7 +6,7 @@ import { getImageFromApi } from '../API/TMDBApi'
 class FilmItem extends React.PureComponent {
 
   render() {
-    const { film, isFavorite, displayDetailForFilm } = this.props
+    const { film, isFilmFavorite, displayDetailForFilm } = this.props
 
     return (
       <Card style={styles.card}>
@@ -19,7 +19,7 @@ class FilmItem extends React.PureComponent {
           <View style={styles.content_container}>
 
             <View style={styles.header_container}>
-              {isFavorite &&
+              {isFilmFavorite &&
                 <Image
                   style={styles.favorite_image}
                   source={require('../Images/ic_favorite.png')}
