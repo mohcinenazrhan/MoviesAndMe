@@ -22,8 +22,6 @@ class Search extends React.PureComponent {
   }
 
   _loadFilms = () => {
-    console.log('_loadFilms');
-    
     if (this.searchedText.length > 0) {
       this.setState({ isLoading: true });
       getFilmsFromApiWithSearchedText(this.searchedText, this.page + 1).then(
