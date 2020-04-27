@@ -6,7 +6,7 @@ import {
   Button,
   ActivityIndicator,
 } from "react-native";
-import FilmList from './FilmList'
+import FilmList from "./FilmList";
 import { getFilmsFromApiWithSearchedText } from "../API/TMDBApi";
 
 class Search extends React.PureComponent {
@@ -35,7 +35,7 @@ class Search extends React.PureComponent {
         }
       );
     }
-  }
+  };
 
   _searchTextInputChanged(text) {
     this.searchedText = text;
@@ -90,9 +90,9 @@ class Search extends React.PureComponent {
           />
         </View>
 
-        <View style={{ flex: 1, marginLeft: 5, marginRight: 5 }}>
+        <View style={styles.filmListContainer}>
           <FilmList
-            films={this.state.films} 
+            films={this.state.films}
             navigation={this.props.navigation}
             loadFilms={() => this._loadFilms()}
             page={this.page}
@@ -122,6 +122,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 5,
     paddingLeft: 5,
+  },
+  filmListContainer: {
+    flex: 1,
+    marginLeft: 5,
+    marginRight: 5,
   },
   loading_container: {
     position: "absolute",
