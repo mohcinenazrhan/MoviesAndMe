@@ -29,7 +29,7 @@ class FilmDetail extends React.Component {
           >
             <Image
               style={styles.share_image}
-              source={require("../Images/ic_share.png")}
+              source={require("../Images/ic_share.ios.png")}
             />
           </TouchableOpacity>
         ),
@@ -105,7 +105,7 @@ class FilmDetail extends React.Component {
         >
           <Image
             style={styles.share_image}
-            source={require("../Images/ic_share.png")}
+            source={require("../Images/ic_share.android.png")}
           />
         </TouchableOpacity>
       );
