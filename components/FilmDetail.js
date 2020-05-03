@@ -14,6 +14,7 @@ import { getFilmDetailFromApi, getImageFromApi } from "../API/TMDBApi";
 import moment from "moment";
 import numeral from "numeral";
 import { connect } from "react-redux";
+import EnlargeShrink from "../Animations/EnlargeShrink";
 
 class FilmDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -74,19 +75,17 @@ class FilmDetail extends React.Component {
     }
 
     this.setState({ isLoading: true });
-    getFilmDetailFromApi(this.props.route.params.idFilm).then(
-      (data) => {
-        this.setState(
-          {
-            film: data,
-            isLoading: false,
-          },
-          () => {
-            this._updateNavigationParams();
-          }
-        );
-      }
-    );
+    getFilmDetailFromApi(this.props.route.params.idFilm).then((data) => {
+      this.setState(
+        {
+          film: data,
+          isLoading: false,
+        },
+        () => {
+          this._updateNavigationParams();
+        }
+      );
+    });
   }
 
   _shareFilm() {
@@ -128,16 +127,22 @@ class FilmDetail extends React.Component {
   }
 
   _displayFavoriteImage() {
-    var sourceImage = require("../Images/ic_favorite_border.png");
+    let sourceImage = require("../Images/ic_favorite_border.png");
+    let shouldEnlarge = false;
+
     if (
       this.props.favoritesFilm.findIndex(
         (item) => item.id === this.state.film.id
       ) !== -1
     ) {
-      // Film dans nos favoris
+      shouldEnlarge = true;
       sourceImage = require("../Images/ic_favorite.png");
     }
-    return <Image style={styles.favorite_image} source={sourceImage} />;
+    return (
+      <EnlargeShrink shouldEnlarge={shouldEnlarge}>
+        <Image style={styles.favorite_image} source={sourceImage} />
+      </EnlargeShrink>
+    );
   }
 
   _displayFilm() {
@@ -248,8 +253,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   favorite_image: {
-    width: 40,
-    height: 40,
+    flex: 1,
+    width: null,
+    height: null,
   },
   share_touchable_floatingactionbutton: {
     position: "absolute",
